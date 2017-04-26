@@ -1,0 +1,94 @@
+A list is an order collections or sequence of items. 
+You can insert, delete or search items based on index position.
+It also allows duplicate entry in the list collections.
+ 
+
+Une collection de type List est une collection simple 
+et ordonnée d'éléments qui autorise les doublons.
+La liste étant ordonnée, un élément peut être accédé à partir 
+de son index.
+Cette interface, ajoutée à Java 1.2, étend l'interface Collection.
+##############################
+Une collection de type List permet :
+de contenir des doublons
+d'interagir avec un élément de la collection en utilisant sa position
+d'insérer des éléments null
+Pour les listes, une interface particulière est définie 
+pour permettre le parcours dans les deux sens de la liste et 
+réaliser des mises à jour : l'interface ListIterator
+
+
+########################################################
+La class Vector
+########################################################
+
+La classe Vector, présente depuis Java 1.0, est un tableau dont la taille peut varier selon le nombre d'éléments qu'il contient.
+
+Lors de la création d'une instance de type Vector, il est possible de lui préciser une capacité initiale et une taille d'incrémentation 
+en utilisant la surcharge correspondante du constructeur.
+
+Toutes les méthodes de la classe Vector sont synchronized : elle est donc moins performante que la classe ArrayList car elle est thread-safe.
+
+La classe Vector est antérieure à l'API Collections : elle a été mise à jour ultérieurement pour implémenter l'interface Liste. 
+Il y a de ce fait plusieurs méthodes redondantes comme par exemple les méthodes add() et addElement().
+
+Avant l'API Collections la classe Vector était fréquemment utilisée : il est préférable d'utiliser une des implémentations de l'API Collections.
+
+Les éléments sont stockés dans l'ordre dans lequel ils sont ajoutés dans la collection. 
+Un élément peut être ajouté ou supprimé à n'importe qu'elle position dans la collection.
+
+########################################################
+La classe ArrayList
+########################################################
+
+Les tableaux font partis du langage Java et sont faciles à utiliser mais leur taille ne peut pas varier. 
+La classe ArrayList, ajoutée à Java 1.2, est un tableau d'objets dont la taille est dynamique : 
+elle utilise un tableau dont la taille s'adapte automatiquement au nombre d'éléments de la collection. 
+Cette adaptation a cependant un coût car elle nécessite l'instanciation d'un nouveau tableau et la copie des éléments dans ce nouveau tableau.
+
+Elle hérite de la classe AbstractList donc elle implémente l'interface List.
+
+Le fonctionnement de cette classe est similaire à celui de la classe Vector. 
+La différence avec la classe Vector est que cette dernière est multithread (toutes ses méthodes sont synchronisées). 
+Pour une utilisation dans un thread unique, la synchronisation des méthodes est inutile et coûteuse. 
+Il est alors préférable d'utiliser un objet de la classe ArrayList.
+
+La classe ArrayList est l'implémentation la plus simple de l'interface List. Elle présente plusieurs caractéristiques :
+
+elle n'est pas thread-safe
+elle utilise un tableau pour stocker ses éléments : le premier élément de la collection possède l'index 0
+l'accès à un élément se fait grâce à son index
+elle implémente toutes les méthodes de l'interface List
+elle autorise l'ajout d'éléments null
+
+########################################################
+la classe LinkedList
+########################################################
+La classe LinkedList, ajoutée à Java 1.2, est une implémentation d'une liste doublement chaînée dans laquelle les éléments 
+de la collection sont reliés par des pointeurs. La suppression ou l'ajout d'un élément se fait simplement en modifiant des pointeurs.
+
+Elle hérite de la classe AbstractSequentialList et implémente toutes les méthodes, même celles optionnelles, de l'interface List. 
+Elle implémente l'interface Deque à partir de Java 6.
+
+Elle présente plusieurs caractéristiques :
+
+elle n'a pas besoin d'être redimensionnée quelque soit le nombre d'éléments qu'elle contient
+elle permet l'ajout d'un élément null.
+
+########################################################
+Le choix d'une implémentation de type List
+########################################################
+
+S'il n'y a aucun accès concurrent sur la collection, le choix doit se faire entre les classes ArrayList et LinkedList. Ce choix dépendant de l'utilisation qui sera faite de la collection :
+
+Si l'ajout ou la suppression d'éléments se font essentiellement à la fin de la collection, alors il faut utiliser la classe ArrayList
+Si les ajouts ou la suppression d'éléments se font à une position aléatoire dans la collection, alors il faut utiliser la classe LinkedList
+Un élément peut être accédé directement par son index dans une ArrayList, ce qui n'est pas possible avec une LinkedList sauf pour le premier et le dernier élément.
+
+Si les accès concurrents doivent être gérés alors il y a deux cas de figure :
+
+Si la collection est peu fréquemment mise à jour alors il faut utiliser la classe copyOnWriteArrayList qui permet des lectures non bloquantes mais les mises à jour impliquent une duplication de la collection
+Sinon il faut utiliser l'instance retournée par la méthode synchronizedList() de la classe Collections en lui passant en paramètre une instance de type ArrayList ou LinkedList. Les accès à la collection sont alors thread safe mais pas concurrents.
+Le tableau ci-dessous compare les performances de certaines fonctionnalités de base de différentes implémentations de type List.
+
+

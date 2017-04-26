@@ -1,0 +1,84 @@
+Une collection de type Set ne permet pas l'ajout de doublons ni
+ l'accès direct à un élément de la collection. 
+ Les fonctionnalités de base de ce type de collection 
+ sont définies dans l'interface java.util.Set.
+ L'interface Set possède deux interfaces filles : SortedSet et NavigableSet.
+ 
+ 
+ 
+L'interface Set définit les fonctionnalités d'une collection qui ne peut pas contenir de doublons dans ses éléments.
+
+Les éléments ajoutés dans une collection de type Set doivent réimplémenter leurs méthodes equals() et hashCode(). 
+Ces méthodes sont utilisées lors de l'ajout d'un élément pour déterminer s'il est déjà présent dans la collection. 
+La valeur retournée par hashCode() est recherchée dans la collection :
+
+si aucun objet de la collection n'a la même valeur de hachage alors l'objet n'est pas encore dans la collection et peut être ajouté
+si un ou plusieurs objets de la collection ont la même valeur de hachage alors la méthode equals() de l'objet à ajouter est invoquée 
+sur chacun des objets pour déterminer si l'objet est déjà présent ou non dans la collection
+Le comportement d'une collection de type Set n'est pas spécifié si des objets mutables lui sont ajoutés notamment 
+si des modifications changent le résultat des méthodes equals() et hashCode().
+
+Une collection de type Set peut contenir un objet null mais cela dépend des implémentations. 
+Certaines d'entre-elles ne permettent pas l'ajout de null.
+
+########################################################
+La classe HashSet
+########################################################
+La classe HashSet, ajoutée à Java 1.2, est une implémentation simple de l'interface Set qui utilise une HashMap. 
+La clé de la HashMap est la valeur de hachage de l'élément.
+
+La classe HashSet présente plusieurs caractéristiques :
+
+elle ne propose aucune garantie sur l'ordre de parcours lors de l'itération sur les éléments qu'elle contient
+elle ne permet pas d'ajouter des doublons mais elle permet l'ajout d'un élément null
+La classe HashSet utilise en interne une HashMap dont la clé est l'élément et dont la valeur est une instance d'Object identique pour tous les éléments. 
+
+########################################################
+La classe TreeSet
+########################################################
+La classe TreeSet, ajoutée à Java 1.2, stocke ses éléments de manière ordonnée en les comparant entre-eux. 
+Cette classe permet d'insérer des éléments dans n'importe quel ordre et de restituer ces éléments dans un ordre précis lors de son parcours.
+
+Une collection de type TreeSet ne peut pas contenir de doublons.
+Elle implémente l'interface NavigableSet depuis Java 6
+
+L'ordre des éléments de la collection peut être défini par deux moyens :
+
+l'ordre naturel des éléments s'ils implémentent l'interface Comparable
+l'ordre obtenu par l'utilisation d'une instance de type Comparator fournie en paramètre du constructeur de la collection
+Le mécanisme utilisé pour la comparaison lors de la définition de l'ordre (Comparable ou Comparator) doit être cohérent 
+avec l'implémentation de la méthode equals() : si element1.compareTo(element2) == 0 alors obligatoirement element1.equals(element2) == true.
+
+########################################################
+ Le choix d'une implémentation de type Set
+ ########################################################
+ 
+Certaines implémentations sont spécialisées pour être utilisées dans des situations particulières.
+
+C'est notamment le cas de la classe EnumSet qui ne doit être utilisée que pour gérer un ensemble d'énumérations.
+
+La classe CopyOnWriteArraySet ne doit être utilisée que pour des collections thread-safe de petites tailles, 
+où les opérations réalisées sont essentiellement des lectures et où les Iterator ne peuvent pas modifier le contenu de la collection.
+
+Le JDK contient plusieurs implémentations généralistes de l'interface Set qui peuvent selon les besoins :
+
+maintenir un ordre des clés
+gérer des accès concurrents
+
+Si la collection n'est pas utilisée par plusieurs threads, il est possible d'utiliser les classes HashSet, LinkedHashSet et TreeSet. 
+Si les données doivent être triées, il faut utiliser la classe TreeSet. Si les données de la collection doivent être fréquemment parcourues, 
+il est préférable d'utiliser la classe LinkedHashSet.
+
+Si la collection doit être utilisée par plusieurs threads, il faut utiliser la classe ConcurrentSkipListSet ou CopyOnWriteArraySet 
+uniquement si les accès sont essentiellement des lectures. Il est aussi possible d'utiliser une version synchronized d'une implémentation 
+de type Set en utilisant la méthode synchronizedSet() de la classe Collections.
+
+Si les éléments de la collection doivent être triés, il faut utiliser les classes TreeSet ou ConcurrentSkipListSet. 
+Si en plus les accès concurrents doivent être gérés, seule la classe ConcurrentSkipListSet doit être utilisée. 
+Sinon il est préférable d'utiliser la classe TreeSet pour des collections de grandes tailles ou 
+si de nombreuses opérations de suppressions d'éléments doivent être réalisées.
+
+Indépendamment des fonctionnalités, les performances peuvent être un critère important dans le choix d'une implémentation de type Set.
+
+
+

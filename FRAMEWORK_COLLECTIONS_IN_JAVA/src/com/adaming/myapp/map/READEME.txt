@@ -1,0 +1,11 @@
+Les collections de type Map : les associations de type clé/valeur
+
+Les collections de type Map sont définies et implémentées comme des dictionnaires sous la forme d'associations de paires de type clés/valeurs. 
+La clé doit être unique. En revanche, la même valeur peut être associée à plusieurs clés différentes.
+
+Avant l'apparition du framework Collections, la classe dédiée à cette gestion était la classe Hashtable.
+
+Un objet de type Map permet de lier un objet avec une clé qui peut être un type primitif ou un autre objet. 
+Il est ainsi possible d'obtenir un objet à partir de sa clé.
+
+Au fur et à mesure des versions de Java, des classes et interfaces de type Map ont été ajoutées
